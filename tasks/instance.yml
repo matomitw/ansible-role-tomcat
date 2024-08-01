@@ -12,6 +12,7 @@
     group: "{{ instance.group | default(tomcat_group) }}"
     createhome: false
     system: true
+    force: yes
 
 - name: instance | Ensure instance directory exists
   ansible.builtin.file:
