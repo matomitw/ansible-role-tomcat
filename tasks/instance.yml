@@ -10,9 +10,19 @@
     name: "{{ instance.user | default(tomcat_user) }}"
     state: present
     group: "{{ instance.group | default(tomcat_group) }}"
-    createhome: false
     system: true
-    force: yes
+    create_home: false
+    home: "/nonexistent"
+
+
+# - name: instance | Ensure instance user exists
+#   ansible.builtin.user:
+#     name: "{{ instance.user | default(tomcat_user) }}"
+#     state: present
+#     group: "{{ instance.group | default(tomcat_group) }}"
+#     createhome: false
+#     system: true
+ 
 
 - name: instance | Ensure instance directory exists
   ansible.builtin.file:
