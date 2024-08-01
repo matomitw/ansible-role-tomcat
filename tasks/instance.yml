@@ -5,6 +5,12 @@
     name: "{{ instance.group | default(tomcat_group) }}"
     state: present
 
+- name: Check if Tomcat user exists
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ instance.user | default(tomcat_user) }}"
+  register: tomcat_user_exists
+
 - name: instance | Ensure instance user exists
   ansible.builtin.user:
     name: "{{ instance.user | default(tomcat_user) }}"
@@ -12,7 +18,8 @@
     group: "{{ instance.group | default(tomcat_group) }}"
     system: true
     create_home: false
-    home: "/nonexistent"
+  when: tomcat_user_exists.failed
+
 
 
 # - name: instance | Ensure instance user exists
