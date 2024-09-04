@@ -141,9 +141,9 @@
     quiet: true
 
     # debug tomcat_instances test 
-- name: Debug tomcat_instances
-  ansible.builtin.debug:
-    var: tomcat_instances
+# - name: Debug tomcat_instances
+#   ansible.builtin.debug:
+#     var: tomcat_instances
 
     
 - name: assert | Test tomcat_instances
