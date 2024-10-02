@@ -16,3 +16,10 @@
     loop_var: instance
   when:
     - tomcat_instances is defined
+
+- name: Configure Tomcat instances
+  include_tasks: configure_instance.yml
+  loop: "{{ tomcat_instances }}"
+  loop_control:
+    loop_var: instance
+
