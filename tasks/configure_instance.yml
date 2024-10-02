@@ -1,0 +1,7 @@
+- name: Set up Tomcat configuration
+  template:
+    src: server.xml.j2
+    dest: "/opt/{{ instance.name }}/conf/server.xml"
+  vars:
+    tomcat_port: "{{ instance.non_ssl_connector_port }}"
+    tomcat_shutdown_port: "{{ instance.shutdown_port }}"
