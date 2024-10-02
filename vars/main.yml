@@ -11,3 +11,8 @@ _tomcat_unarchive_urls:
   10: "{{ tomcat_mirror }}/dist/tomcat/tomcat-10/v{{ tomcat_version10 }}/bin/apache-tomcat-{{ tomcat_version10 }}.tar.gz"
 
 tomcat_unarchive_url: "{{ _tomcat_unarchive_urls[tomcat_version] }}"
+
+tomcat_home: "/opt/tomcat"
+tomcat_user: "tomcat"
+tomcat_group: "tomcat"
+
