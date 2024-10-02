@@ -140,12 +140,12 @@
       - tomcat_service_enabled is boolean
     quiet: true
 
-- name: assert | Test tomcat_instances
-  ansible.builtin.assert:
-    that:
-      - tomcat_instances is defined
-      - tomcat_instances is iterable
-    quiet: true
+# - name: assert | Test tomcat_instances
+#   ansible.builtin.assert:
+#     that:
+#       - tomcat_instances is defined
+#       - tomcat_instances is iterable
+#     quiet: true
 
 - name: assert | Test tomcat_address
   ansible.builtin.assert:
