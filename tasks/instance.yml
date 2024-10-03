@@ -69,10 +69,6 @@
     mode: "0440"
   become: yes
 
-- name: Move tomcat_src.tar.gz to correct location
-  ansible.builtin.command:
-    cmd: cp /var/lib/tomcat/instances/thermostat/tomcat_src.tar.gz /opt/tomcat/
-  become: yes
 
 - name: instance | Install tomcat instance
   ansible.builtin.unarchive:
