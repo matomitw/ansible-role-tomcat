@@ -82,17 +82,17 @@
     mode: "0755"
 
 
-- name: instance | Save instance name
-  ansible.builtin.set_fact:
-    instance_name: "{{ instance.name }}"
+# - name: instance | Save instance name
+#   ansible.builtin.set_fact:
+#     instance_name: "{{ instance.name }}"
 
-- name: instance | Configure tomcat instance - server.xml
-  ansible.builtin.template:
-    src: server.xml.j2
-    dest: "{{ tomcat_directory }}/{{ instance.name }}/conf/server.xml"
-    mode: "0644"
-  notify:
-    - Restart tomcat instance
+# - name: instance | Configure tomcat instance - server.xml
+#   ansible.builtin.template:
+#     src: server.xml.j2
+#     dest: "{{ tomcat_directory }}/{{ instance.name }}/conf/server.xml"
+#     mode: "0644"
+#   notify:
+#     - Restart tomcat instance
 
 # - name: instance | Configure tomcat instance - setenv.sh
   # ansible.builtin.template:
