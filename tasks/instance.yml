@@ -29,7 +29,13 @@
 #     group: "{{ instance.group | default(tomcat_group) }}"
 #     createhome: false
 #     system: true
- 
+
+- name: Debug variables
+  debug:
+    msg: 
+      - "tomcat_directory: {{ tomcat_directory }}"
+      - "instance.name: {{ instance.name }}"
+      - "tomcat_unarchive_url: {{ tomcat_unarchive_url }}"
 
 - name: instance | Ensure instance directory exists
   ansible.builtin.file:
@@ -47,19 +53,42 @@
     group: "{{ instance.group | default(tomcat_group) }}"
     mode: "0755"
 
-- name: Create Tomcat directory
-  ansible.builtin.file:
-    path: "{{ tomcat_directory }}/{{ instance.name }}"
-    state: directory
-    mode: '0755'
-  become: yes
-
 - name: instance | Download tomcat source
   ansible.builtin.get_url:
     url: "{{ tomcat_unarchive_url }}"
     dest: "{{ tomcat_directory }}/{{ instance.name }}/tomcat_src.tar.gz"
-    mode: "440"
-  become: yes
+    mode: "0440"
+  become: yes 
+
+# - name: instance | Ensure instance directory exists
+#   ansible.builtin.file:
+#     path: "{{ tomcat_directory }}/{{ instance.name }}"
+#     state: directory
+#     owner: "{{ instance.user | default(tomcat_user) }}"
+#     group: "{{ instance.group | default(tomcat_group) }}"
+#     mode: "0755"
+
+# - name: instance | Ensure ROOT directory exists
+#   ansible.builtin.file:
+#     path: "{{ tomcat_directory }}/{{ instance.name }}/webapps/ROOT"
+#     state: directory
+#     owner: "{{ instance.user | default(tomcat_user) }}"
+#     group: "{{ instance.group | default(tomcat_group) }}"
+#     mode: "0755"
+
+# - name: Create Tomcat directory
+#   ansible.builtin.file:
+#     path: "{{ tomcat_directory }}/{{ instance.name }}"
+#     state: directory
+#     mode: '0755'
+#   become: yes
+
+# - name: instance | Download tomcat source
+#   ansible.builtin.get_url:
+#     url: "{{ tomcat_unarchive_url }}"
+#     dest: "{{ tomcat_directory }}/{{ instance.name }}/tomcat_src.tar.gz"
+#     mode: "440"
+#   become: yes
 
 # - name: instance | Download tomcat source
 #   ansible.builtin.get_url:
