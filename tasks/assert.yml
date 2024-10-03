@@ -139,6 +139,10 @@
       - tomcat_service_enabled is defined
       - tomcat_service_enabled is boolean
     quiet: true
+  
+- name: Debug tomcat_instances
+  debug:
+    var: tomcat_instances
     
 - name: assert | Test tomcat_instances
   ansible.builtin.assert:
