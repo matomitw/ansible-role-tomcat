@@ -5,7 +5,7 @@
   ansible.builtin.systemd:
     daemon_reload: true
 
-# - name: Restart tomcat instance
-#   ansible.builtin.service:
-#     name: "{{ instance_name }}"
-#     state: restarted
+- name: Restart tomcat instance
+  ansible.builtin.service:
+    name: "{{ instance_name }}"
+    state: restarted

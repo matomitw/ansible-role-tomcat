@@ -22,15 +22,6 @@
 
 
 
-# - name: instance | Ensure instance user exists
-#   ansible.builtin.user:
-#     name: "{{ instance.user | default(tomcat_user) }}"
-#     state: present
-#     group: "{{ instance.group | default(tomcat_group) }}"
-#     createhome: false
-#     system: true
-
-
 
 
 # - name: instance | Ensure instance directory exists
@@ -56,18 +47,11 @@
     group: "{{ instance.group | default(tomcat_group) }}"
     mode: "0755"
 
-# - name: instance | Download tomcat source
-#   ansible.builtin.get_url:
-#     url: "{{ tomcat_unarchive_url }}"
-#     dest: "{{ tomcat_directory }}/{{ instance.name }}/tomcat_src.tar.gz"
-#     mode: "440"
-
-- name: Download Tomcat source
+- name: instance | Download tomcat source
   ansible.builtin.get_url:
-    url: "https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.55/bin/apache-tomcat-9.0.55.tar.gz"
-    dest: "/opt/tomcat/tomcat_src.tar.gz"
-    mode: "0440"
-  become: yes
+    url: "{{ tomcat_unarchive_url }}"
+    dest: "{{ tomcat_directory }}/{{ instance.name }}/tomcat_src.tar.gz"
+    mode: "440"
 
 
 - name: instance | Install tomcat instance
@@ -82,29 +66,29 @@
     mode: "0755"
 
 
-# - name: instance | Save instance name
-#   ansible.builtin.set_fact:
-#     instance_name: "{{ instance.name }}"
+- name: instance | Save instance name
+  ansible.builtin.set_fact:
+    instance_name: "{{ instance.name }}"
 
-# - name: instance | Configure tomcat instance - server.xml
-#   ansible.builtin.template:
-#     src: server.xml.j2
-#     dest: "{{ tomcat_directory }}/{{ instance.name }}/conf/server.xml"
-#     mode: "0644"
-#   notify:
-#     - Restart tomcat instance
+- name: instance | Configure tomcat instance - server.xml
+  ansible.builtin.template:
+    src: server.xml.j2
+    dest: "{{ tomcat_directory }}/{{ instance.name }}/conf/server.xml"
+    mode: "0644"
+  notify:
+    - Restart tomcat instance
 
-# - name: instance | Configure tomcat instance - setenv.sh
-  # ansible.builtin.template:
-  #   src: setenv.sh.j2
-  #   dest: "{{ tomcat_directory }}/{{ instance.name }}/bin/setenv.sh"
-  #   mode: "0644"
-  # when:
-  #   - instance.java_opts is defined or
-  #     instance.xms is defined or
-  #     instance.xmx is defined
-  # notify:
-  #   - Restart tomcat instance
+- name: instance | Configure tomcat instance - setenv.sh
+  ansible.builtin.template:
+    src: setenv.sh.j2
+    dest: "{{ tomcat_directory }}/{{ instance.name }}/bin/setenv.sh"
+    mode: "0644"
+  when:
+    - instance.java_opts is defined or
+      instance.xms is defined or
+      instance.xmx is defined
+  notify:
+    - Restart tomcat instance
 
 - name: instance | Place neutral default page
   ansible.builtin.copy:
@@ -134,11 +118,11 @@
         user_name: "{{ instance.user | default(tomcat_user) }}"
         group_name: "{{ instance.group | default(tomcat_group) }}"
 
-# - name: instance | Manage tomcat service
-#   ansible.builtin.service:
-#     name: "{{ instance.name }}"
-#     state: "{{ instance.service_state | default(tomcat_service_state) }}"
-#     enabled: "{{ instance.service_enabled | default(tomcat_service_enabled) }}"
+- name: instance | Manage tomcat service
+  ansible.builtin.service:
+    name: "{{ instance.name }}"
+    state: "{{ instance.service_state | default(tomcat_service_state) }}"
+    enabled: "{{ instance.service_enabled | default(tomcat_service_enabled) }}"
 
 - name: instance | Loop over wars
   ansible.builtin.include_tasks:
