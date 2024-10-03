@@ -134,11 +134,11 @@
         user_name: "{{ instance.user | default(tomcat_user) }}"
         group_name: "{{ instance.group | default(tomcat_group) }}"
 
-- name: instance | Manage tomcat service
-  ansible.builtin.service:
-    name: "{{ instance.name }}"
-    state: "{{ instance.service_state | default(tomcat_service_state) }}"
-    enabled: "{{ instance.service_enabled | default(tomcat_service_enabled) }}"
+# - name: instance | Manage tomcat service
+#   ansible.builtin.service:
+#     name: "{{ instance.name }}"
+#     state: "{{ instance.service_state | default(tomcat_service_state) }}"
+#     enabled: "{{ instance.service_enabled | default(tomcat_service_enabled) }}"
 
 - name: instance | Loop over wars
   ansible.builtin.include_tasks:
