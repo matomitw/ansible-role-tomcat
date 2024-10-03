@@ -1,6 +1,33 @@
 ---
 # vars file for tomcat
 
+tomcat_instances:
+  - name: "{{ tomcat_name }}"
+    version: "{{ tomcat_version }}"
+    user: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+    xms: "{{ tomcat_xms }}"
+    xmx: "{{ tomcat_xmx }}"
+    non_ssl_connector_port: "{{ tomcat_non_ssl_connector_port }}"
+    ssl_connector_port: "{{ tomcat_ssl_connector_port }}"
+    shutdown_port: "{{ tomcat_shutdown_port }}"
+    ajp_enabled: "{{ tomcat_ajp_enabled }}"
+    ajp_port: "{{ tomcat_ajp_port }}"
+    ajp_secret: "{{ tomcat_ajp_secret }}"
+    # You can pick an address per instance:
+    # address: "127.0.0.1"
+    packet_size: 8192
+    java_opts:
+      - name: JRE_HOME
+        value: "{{ tomcat_jre_home }}"
+    access_log_enabled: "{{ tomcat_access_log_enabled }}"
+    access_log_directory: "{{ tomcat_access_log_directory }}"
+    access_log_prefix: "{{ tomcat_access_log_prefix }}"
+    access_log_suffix: "{{ tomcat_access_log_suffix }}"
+    access_log_pattern: "{{ tomcat_access_log_pattern }}"
+    service_state: "{{ tomcat_service_state }}"
+    service_enabled: "{{ tomcat_service_enabled }}"
+
 
 # If you want to download Tomcat from another location, adjust these parameters
 # to your liking. For "normal" use, this does not require modification.
