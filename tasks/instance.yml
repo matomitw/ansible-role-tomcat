@@ -33,13 +33,20 @@
 
 
 
-- name: instance | Ensure instance directory exists
+# - name: instance | Ensure instance directory exists
+#   ansible.builtin.file:
+#     path: "{{ tomcat_directory }}/{{ instance.name }}"
+#     state: directory
+#     owner: "{{ instance.user | default(tomcat_user) }}"
+#     group: "{{ instance.group | default(tomcat_group) }}"
+#     mode: "0755"
+
+- name: Ensure parent Tomcat directory exists
   ansible.builtin.file:
-    path: "{{ tomcat_directory }}/{{ instance.name }}"
+    path: "/opt/tomcat"
     state: directory
-    owner: "{{ instance.user | default(tomcat_user) }}"
-    group: "{{ instance.group | default(tomcat_group) }}"
-    mode: "0755"
+    mode: '0755'
+
 
 - name: instance | Ensure ROOT directory exists
   ansible.builtin.file:
@@ -56,18 +63,20 @@
     mode: '0755'
   become: yes
 
-- name: instance | Download tomcat source
+
+# - name: instance | Download tomcat source
+#   ansible.builtin.get_url:
+#     url: "{{ tomcat_unarchive_url }}"
+#     dest: "{{ tomcat_directory }}/{{ instance.name }}/tomcat_src.tar.gz"
+#     mode: "440"
+
+- name: Download Tomcat source
   ansible.builtin.get_url:
     url: "{{ tomcat_unarchive_url }}"
-    dest: "{{ tomcat_directory }}/{{ instance.name }}/tomcat_src.tar.gz"
-    mode: "440"
+    dest: "/opt/tomcat/tomcat_src.tar.gz"
+    mode: "0440"
   become: yes
 
-- name: instance | Download tomcat source
-  ansible.builtin.get_url:
-    url: "{{ tomcat_unarchive_url }}"
-    dest: "{{ tomcat_directory }}/{{ instance.name }}/tomcat_src.tar.gz"
-    mode: "440"
 
 - name: instance | Install tomcat instance
   ansible.builtin.unarchive:
@@ -79,6 +88,8 @@
     extra_opts: "--strip-components=1"
     creates: "{{ tomcat_directory }}/{{ instance.name }}/bin"
     mode: "0755"
+
+
 
 - name: instance | Save instance name
   ansible.builtin.set_fact:
